@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  local-database:
+    container_name: "local-database"
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/local-database:/var/lib/postgresql/data
