@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS user_table
 
 CREATE TABLE IF NOT EXISTS document_table
 (
-    id        uuid    not null,
-    owner_id  uuid    not null,
-    file_name varchar not null,
-    file      bytea   not null,
-    primary key (id),
-    unique (id)
+    id        uuid not null,
+    owner_id  uuid,
+    date      date,
+    file_name varchar,
+    file      bytea,
+    primary key (id)
 )
