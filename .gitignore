@@ -3,3 +3,5 @@
 docker/data/*
 docker/data/
 *.iml
+data/*
+.env

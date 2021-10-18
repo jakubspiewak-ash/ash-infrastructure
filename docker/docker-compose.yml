@@ -8,7 +8,57 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5432:5432
     volumes:
       - ./data/local-database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  ash-discovery-service:
+    container_name: ash-discovery-service
+    image: ash-discovery-service:0.0.1-SNAPSHOT
+    # delete "ports" later (only for development)
+    ports:
+      - "8761:8761"
+
+  ash-user-service:
+    container_name: ash-user-service
+    image: ash-user-service:0.0.1-SNAPSHOT
+    environment:
+      EUREKA_URI: ${EUREKA_URI}
+      JDBC_URI: ${JDBC_URI}
+    depends_on:
+      - local-database
+      - ash-discovery-service
+
+  ash-auth-service:
+    container_name: ash-auth-service
+    image: ash-auth-service:0.0.1-SNAPSHOT
+    environment:
+      EUREKA_URI: ${EUREKA_URI}
+      JDBC_URI: ${JDBC_URI}
+    depends_on:
+      - ash-discovery-service
+
+#  ash-expense-service:
+#    container_name: ash-expense-service
+#    image: ash-expense-service:0.0.1-SNAPSHOT
+#    environment:
+#      EUREKA_URI: ${EUREKA_URI}
+#      JDBC_URI: ${JDBC_URI}
+#    depends_on:
+#      - local-database
+#      - ash-discovery-service
+
+  ash-api-gateway:
+    container_name: ash-api-gateway
+    image: ash-api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URI: ${EUREKA_URI}
+      JDBC_URI: ${JDBC_URI}
+    depends_on:
+      - ash-discovery-service
+      - ash-user-service
+      - ash-auth-service
+#      - ash-expense-service
