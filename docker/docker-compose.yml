@@ -39,15 +39,15 @@ services:
     depends_on:
       - ash-discovery-service
 
-#  ash-expense-service:
-#    container_name: ash-expense-service
-#    image: ash-expense-service:0.0.1-SNAPSHOT
-#    environment:
-#      EUREKA_URI: ${EUREKA_URI}
-#      JDBC_URI: ${JDBC_URI}
-#    depends_on:
-#      - local-database
-#      - ash-discovery-service
+  ash-expense-service:
+    container_name: ash-expense-service
+    image: ash-expense-service:0.0.1-SNAPSHOT
+    environment:
+      EUREKA_URI: ${EUREKA_URI}
+      JDBC_URI: ${JDBC_URI}
+    depends_on:
+      - local-database
+      - ash-discovery-service
 
   ash-api-gateway:
     container_name: ash-api-gateway
