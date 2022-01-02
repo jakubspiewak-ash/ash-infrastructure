@@ -61,4 +61,4 @@ services:
       - ash-discovery-service
       - ash-user-service
       - ash-auth-service
-#      - ash-expense-service
+      - ash-expense-service
